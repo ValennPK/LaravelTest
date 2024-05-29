@@ -6,7 +6,7 @@
     {{--@dump($posts)--}}
     <ul>
         @foreach ($posts as $item)
-            <li>{{$item['title']}}</li>
+            <li>{{$item->title}}</li>
         @endforeach
     </ul>
 

@@ -6,7 +6,7 @@
     {{--@dump($posts)--}}
     <ul>
         @foreach ($posts as $item)
-            <li>{{$item->title}}</li>
+            <li><a href="{{route('posts.show',$item)}}">{{$item->title}}</a></li>
         @endforeach
     </ul>
 

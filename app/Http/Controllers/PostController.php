@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use App\Http\Requests\SavePostRequest;
 use Illuminate\Support\Facades\DB;
 
 
@@ -14,46 +15,36 @@ class PostController extends Controller
         return view('posts.index', ['posts'=> $posts]);
     }
 
+    
     public function show(Post $post){
-    return view('posts.show',['post' => $post]);
+        return view('posts.show',['post' => $post]);
     }
 
     public function create(){
-        return view('posts.create');
+        return view('posts.create',['post' => new Post] );
     }
 
-    public function store(Request $request){
-        $request->validate([
-            'title' => ['required','min:4'],
-            'body' => ['required'],
-        ]);
-        $post = new Post;
-        $post->title=$request->title;
-        $post->body=$request->body;
-        $post->save();
+    public function store(SavePostRequest $request){
 
-        session()->flash('status','Post created');
+        Post::create([$request->validated()]);
 
-        return to_route('posts.index');
+        return to_route('posts.index')->with('status','Post created');
     }
 
     public function edit(Post $post){
         return view('posts.edit',['post' => $post]);
     }
 
-    public function update(Request $request, Post $post){
-        $request->validate([
-            'title' => ['required','min:4'],
-            'body' => ['required'],
-        ]);
+    public function update(SavePostRequest $request, Post $post){
 
-        $post->title=$request->title;
-        $post->body=$request->body;
-        $post->save();
+        $post -> update([$request->validated()]);
 
-        session()->flash('status','Post updated');
+        return to_route('posts.show',$post)->with('status','Post updated');
+    }
 
-        return to_route('posts.show',$post);
+    public function destroy(Post $post){
+       $post->delete();
+       return to_route('posts.index')->with('status','Post deleted');
     }
 
 

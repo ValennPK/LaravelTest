@@ -3,4 +3,5 @@
     <li><a style="margin: 10px;" href="{{ route('contact') }}">Contact</a></li>
     <li><a style="margin: 10px;" href="{{ route('about') }}">About</a></li>
     <li><a style="margin: 10px;" href="{{ route('posts.index') }}">Blog</a></li>
+    <li><a style="margin: 10px;" href="{{ route('register') }}">Register</a></li>
 </ul>
